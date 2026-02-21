@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patel Fast Food Menu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Hind+Vadodara:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #e63946;
+            --secondary-color: #f1faee;
+            --text-dark: #1d3557;
+            --price-color: #2a9d8f;
+        }
+
+        body {
+            font-family: 'Poppins', 'Hind Vadodara', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: var(--text-dark);
+        }
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            border-bottom-left-radius: 25px;
+            border-bottom-right-radius: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            padding: 15px;
+            max-width: 600px;
+            margin: auto;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .category-header {
+            background-color: #1d3557;
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .category-header h2 {
+            margin: 0;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .menu-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .eng-name {
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .guj-name {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        .price {
+            font-weight: 700;
+            color: var(--price-color);
+            font-size: 1.1rem;
+        }
+
+        .price::before {
+            content: '₹';
+            margin-right: 2px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 400px) {
+            .eng-name { font-size: 0.9rem; }
+            .price { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Patel Fast Food</h1>
+    <p>સ્વાદિષ્ટ નાસ્તો | Delicious Fast Food</p>
+</header>
+
+<div class="container">
+
+    <div class="category-card">
+        <div class="category-header">
+            <h2>Sandwiches 🥪</h2>
+            <span>સેન્ડવીચ</span>
+        </div>
+        <div class="menu-list">
+            <div class="menu-item"><div class="item-details"><span class="eng-name">Masala Sandwich</span><span class="guj-name">મસાલા સેન્ડવીચ</span></div><div class="price">40</div></div>
+            <div class="menu-item"><div class="item-details"><span class="eng-name">Cheese Masala Sandwich</span><span class="guj-name">ચીઝ મસાલા સેન્ડવીચ</span></div><div class="price">60</div></div>
+            <div class="menu-item"><div class="item-details"><span class="eng-name">Cheese Chilli Sandwich</span><span class="guj-name">ચીઝ ચીલી સેન્ડવીચ</span></div><div class="price">70</div></div>
+            <div class="menu-item"><div class="item-details"><span class="eng-name">Vegetable Sandwich</span><span class="guj-name">વેજીટેબલ સેન્ડવીચ</span></div><div class="price">60</div></div>
+            <div class="menu-item"><div class="item-details"><span class="eng-name">Cheese Vegetable Sandwich</span><span class="guj-name">ચીઝ વેજીટેબલ સેન્ડવીચ</span></div><div class="price">80</div></div>
+        </div>
+    </div>
+
+    <div class="category-card">
+        <div class="category-header">
+            <h2>French Fries 🍟</h2>
+            <span>ફ્રેન્ચ ફ્રાઈસ</span>
+        </div>
+        <div class="menu-list">
+            <div class="menu-item"><div class="item-details"><span class="eng-name">Salted French Fries</span><span class="guj-name">સોલ્ટેડ ફ્રેન્ચ ફ્રાઈસ</span></div><div class="price">50</div></div>
+            <div class="menu-item"><div class="item-details"><span class="eng-name">Masala French Fries</span><span class="guj-name">મસાલા ફ્રેન્ચ ફ્રાઈસ</span></div><div class="price">50</div></div>
+            <div class="menu-item"><div class="item-details"><span class="eng-name">Peri-Peri French Fries</span><span class="guj-name">પેરી-પેરી ફ્રેન્ચ ફ્રાઈસ</span></div><div class="price">70</div></div>
+            <div class="menu-item"><div class="item-details"><span class="eng-name">Cheese Salted Fries</span><span class="guj-name">ચીઝ સોલ્ટેડ ફ્રાઈસ</span></div><div class="price">70</div></div>
+            <div class="menu-item"><div class="item-details"><span class="eng-name">Cheese Masala Fries</span><span class="guj-name">ચીઝ મસાલા ફ્રાઈસ</span></div><div class="price">70</div></div>
+            <div class="menu-item"><div class="item-details"><span class="eng-name">Cheese Peri-Peri Fries</span><span class="guj-name">ચીઝ પેરી-પેરી ફ્રાઈસ</span></div><div class="price">100</div></div>
+        </div>
+    </div>
+
+    <div class="category-card">
+        <div class="category-header">
+            <h2>Maggi 🍜</h2>
+            <span>મેગી</span>
+        </div>
+        <div class="menu-list">
+            <div class="menu-item"><div class="item-details"><span class="eng-name">Masala Maggi</span><span class="guj-name">મસાલા મેગી</span></div><div class="price">50</div></div>
+            <div class="menu-item"><div class="item-details"><span class="eng-name">Cheese Masala Maggi</span><span class="guj-name">ચીઝ મસાલા મેગી</span></div><div class="price">70</div></div>
+            <div class="menu-item"><div class="item-details"><span class="eng-name">Vegetable Maggi</span><span class="guj-name">વેજીટેબલ મેગી</span></div><div class="price">60</div></div>
+            <div class="menu-item"><div class="item-details"><span class="eng-name">Butter Cheese Veg Maggi</span><span class="guj-name">બટર ચીઝ વેજી. મેગી</span></div><div class="price">100</div></div>
+        </div>
+    </div>
+
+    <div class="category-card">
+        <div class="category-header">
+            <h2>Pizza 🍕</h2>
+            <span>પિઝા</span>
+        </div>
+        <div class="menu-list">
+            <div class="menu-item"><div class="item-details"><span class="eng-name">Margarita Pizza</span><span class="guj-name">માર્ગેરિટા પિઝા</span></div><div class="price">100</div></div>
+            <div class="menu-item"><div class="item-details"><span class="eng-name">Mexican Pizza</span><span class="guj-name">મેક્સિકન પિઝા</span></div><div class="price">150</div></div>
+            <div class="menu-item"><div class="item-details"><span class="eng-name">Patel Special Pizza</span><span class="guj-name">પટેલ સ્પેશિયલ પિઝા</span></div><div class="price">200</div></div>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <p>© 2026 Patel Fast Food. All rights reserved.</p>
+</footer>
+
+</body>
+</html>
