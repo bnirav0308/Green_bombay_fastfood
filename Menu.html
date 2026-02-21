@@ -42,17 +42,17 @@
     background: radial-gradient(circle at 50% 0%, rgba(255,80,0,0.25) 0%, transparent 70%);
   }
   .logo-ring {
-    width: 90px; height: 90px;
-    background: linear-gradient(135deg, #ff6b00, #ff0040);
-    border-radius: 50%;
+    width: 120px; height: 120px;
+    border-radius: 20px;
     margin: 0 auto 12px;
     display: flex; align-items: center; justify-content: center;
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 36px;
-    color: white;
-    letter-spacing: 2px;
-    box-shadow: 0 0 30px rgba(255,100,0,0.6), 0 0 60px rgba(255,0,64,0.3);
     position: relative; z-index: 1;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(255,100,0,0.5), 0 0 60px rgba(255,0,64,0.2);
+  }
+  .logo-ring img {
+    width: 100%; height: 100%;
+    object-fit: contain;
   }
   .shop-name {
     font-family: 'Bebas Neue', sans-serif;
@@ -415,8 +415,9 @@
 
 <!-- HEADER -->
 <div class="header">
-    <img src="Logo.jpeg" alt="PFZ Logo" style="width:120px; height:120px; object-fit:contain; border-radius:16px; margin-bottom:8px;">
-    <div class="shop-tagline">Fast Food &amp; More</div>
+  <div class="logo-ring"><img src="Logo.jpeg" alt="PFZ Logo"></div>
+  <div class="shop-name">PFZ</div>
+  <div class="shop-tagline">Fast Food &amp; More</div>
 </div>
 
 <!-- SEARCH -->
@@ -452,17 +453,21 @@
   <div id="drawerItems"></div>
   <div id="drawerBill"></div>
   <div class="note-box">
-    <label>Special Instructions (optional)</label>
+    <label>👤 Your Name <span style="color:#c0392b">*</span></label>
+    <input type="text" id="customerName" placeholder="Enter your name..." style="width:100%;border:2px solid #eee;border-radius:10px;padding:11px 14px;font-family:'Poppins',sans-serif;font-size:14px;outline:none;color:#1a1a1a;transition:border 0.2s;" onfocus="this.style.borderColor='#c0392b'" onblur="this.style.borderColor='#eee'">
+  </div>
+  <div class="note-box">
+    <label>📝 Special Instructions (optional)</label>
     <textarea id="noteInput" placeholder="e.g. Less spicy, no onion..."></textarea>
   </div>
-  <button class="order-btn" onclick="placeOrder()">✅ Place Order</button>
+  <button class="order-btn" onclick="placeOrder()">📲 Send Order on WhatsApp</button>
 </div>
 
 <!-- SUCCESS -->
 <div class="success" id="successScreen">
   <div class="success-anim">🎉</div>
-  <h2>Order Placed!</h2>
-  <p>Your order has been sent to the kitchen.<br>We'll serve it shortly. Sit back &amp; relax!</p>
+  <h2>Order Sent!</h2>
+  <p>Your order was sent to us on WhatsApp! ✅<br>We'll prepare it shortly. Sit back &amp; relax! 😊</p>
   <div class="success-items" id="successItems"></div>
   <button class="reset-btn" onclick="resetAll()">🍽️ Order More</button>
 </div>
@@ -703,11 +708,39 @@ function renderDrawer() {
 function placeOrder() {
   const entries = Object.entries(cart);
   if (!entries.length) { alert("Please add items first!"); return; }
+
+  // Validate customer name
+  const nameInput = document.getElementById("customerName");
+  const customerName = nameInput.value.trim();
+  if (!customerName) {
+    nameInput.style.borderColor = "#c0392b";
+    nameInput.style.boxShadow = "0 0 0 3px rgba(192,57,43,0.15)";
+    nameInput.placeholder = "⚠️ Please enter your name!";
+    nameInput.focus();
+    return;
+  }
+
   const note = document.getElementById("noteInput").value.trim();
   const total = getTotal();
 
-  // Build success summary
+  // ── Build WhatsApp message ──
+  let msg = `*==== NEW ORDER - PFZ ====*\n`;
+  msg += `*Customer:* ${customerName}\n`;
+  msg += `*Time:* ${new Date().toLocaleTimeString('en-IN', {hour:'2-digit',minute:'2-digit'})}\n`;
+  msg += `*-------------------------*\n`;
+  entries.forEach(([id,qty])=>{
+    const item = MENU.find(i=>i.id==id);
+    if(!item) return;
+    msg += `- ${item.name} x${qty}  =  *Rs.${item.price*qty}*\n`;
+  });
+  msg += `*-------------------------*\n`;
+  msg += `*TOTAL: Rs.${total}*\n`;
+  if(note) msg += `*Note:* ${note}\n`;
+  msg += `*=========================*`;
+
+  // ── Build success screen ──
   let html = `<div class="si-title">Order Summary</div>`;
+  html += `<div class="si-row"><span>👤 Name</span><span style="font-weight:700">${customerName}</span></div>`;
   entries.forEach(([id,qty])=>{
     const item = MENU.find(i=>i.id==id);
     if(!item) return;
@@ -719,12 +752,17 @@ function placeOrder() {
 
   closeDrawer();
   document.getElementById("successScreen").classList.add("show");
-  console.log("ORDER:", { items: Object.entries(cart).map(([id,qty])=>({...MENU.find(i=>i.id==id),qty})), note, total });
+
+  // ── Open WhatsApp ──
+  const phone = "917777976166"; // Your WhatsApp number
+  const waUrl = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+  setTimeout(() => { window.open(waUrl, "_blank"); }, 800);
 }
 
 function resetAll() {
   cart = {};
   document.getElementById("noteInput").value = "";
+  document.getElementById("customerName").value = "";
   document.getElementById("successScreen").classList.remove("show");
   refresh();
   window.scrollTo(0,0);
