@@ -857,12 +857,14 @@
         const CAT_EMOJI = {
             "Sandwich": "🥪", "Garlic Bread": "🍞", "Frenky": "🌯",
             "Burger": "🍔", "Sweet Bread": "🍫", "Maggi": "🍜",
-            "French Fries": "🍟", "Pizza": "🍕", "Pasta": "🍝", "Chaat Special": "🥘"
+            "French Fries": "🍟", "Pizza": "🍕", "Pasta": "🍝", "Chaat Special": "🥘",
+            "Coldrinks": "🥤"
         };
         const CAT_COLOR = {
             "Sandwich": "#c0392b", "Garlic Bread": "#27ae60", "Frenky": "#8e44ad",
             "Burger": "#e67e22", "Sweet Bread": "#2980b9", "Maggi": "#e67e22",
-            "French Fries": "#f39c12", "Pizza": "#e91e8c", "Pasta": "#9b59b6", "Chaat Special": "#d35400"
+            "French Fries": "#f39c12", "Pizza": "#e91e8c", "Pasta": "#9b59b6", "Chaat Special": "#d35400",
+            "Coldrinks": "#1a7abf"
         };
 
         // ══════════════════════════════════════════
@@ -922,22 +924,22 @@
                     const card = document.createElement("div");
                     card.className = "item-card";
                     card.innerHTML = `
-            <div class="item-left">
-              <div class="item-emoji-box" style="background:${color}18;">${item.emoji}</div>
-              <div>
-                <div class="item-name">${item.name}</div>
-                <div class="item-price" style="color:${color}">${item.price > 0 ? '₹' + item.price : 'Ask'}</div>
-              </div>
-            </div>
-            <div class="item-right">
-              ${qty === 0
+                <div class="item-left">
+                  <div class="item-emoji-box" style="background:${color}18;">${item.emoji}</div>
+                  <div>
+                    <div class="item-name">${item.name}</div>
+                    <div class="item-price" style="color:${color}">${item.price > 0 ? '₹' + item.price : 'Ask'}</div>
+                  </div>
+                </div>
+                <div class="item-right">
+                  ${qty === 0
                             ? `<button class="add-btn" style="background:${color}" onclick="addItem(${item.id})">+</button>`
                             : `<div class="qty-wrap">
-                    <button class="qty-btn" onclick="removeItem(${item.id})">−</button>
-                    <span class="qty-num">${qty}</span>
-                    <button class="qty-btn" style="border-color:${color}; color:${color}" onclick="addItem(${item.id})">+</button>
-                   </div>`}
-            </div>`;
+                        <button class="qty-btn" onclick="removeItem(${item.id})">−</button>
+                        <span class="qty-num">${qty}</span>
+                        <button class="qty-btn" style="border-color:${color}; color:${color}" onclick="addItem(${item.id})">+</button>
+                       </div>`}
+                </div>`;
                     sec.appendChild(card);
                 });
 
@@ -998,28 +1000,28 @@
                 const sub = item.price * q;
                 total += sub; qty += q;
                 itemsEl.innerHTML += `
-          <div class="cart-row">
-            <div class="cr-left">
-              <span class="cr-emoji">${item.emoji}</span>
-              <div>
-                <div class="cr-name">${item.name}</div>
-                <div class="cr-price">${item.price > 0 ? '₹' + item.price + ' each' : 'Ask for price'}</div>
-              </div>
-            </div>
-            <div class="cr-right">
-              <button class="cr-qty-btn" onclick="removeItem(${item.id})">−</button>
-              <span class="qty-num">${q}</span>
-              <button class="cr-qty-btn" onclick="addItem(${item.id})">+</button>
-              <span class="cr-sub">₹${sub}</span>
-            </div>
-          </div>`;
+              <div class="cart-row">
+                <div class="cr-left">
+                  <span class="cr-emoji">${item.emoji}</span>
+                  <div>
+                    <div class="cr-name">${item.name}</div>
+                    <div class="cr-price">${item.price > 0 ? '₹' + item.price + ' each' : 'Ask for price'}</div>
+                  </div>
+                </div>
+                <div class="cr-right">
+                  <button class="cr-qty-btn" onclick="removeItem(${item.id})">−</button>
+                  <span class="qty-num">${q}</span>
+                  <button class="cr-qty-btn" onclick="addItem(${item.id})">+</button>
+                  <span class="cr-sub">₹${sub}</span>
+                </div>
+              </div>`;
             });
 
             billEl.innerHTML = `
-        <div class="bill-box">
-          <div class="bill-row"><span>${qty} item${qty !== 1 ? "s" : ""}</span><span>₹${total}</span></div>
-          <div class="bill-row total"><span>Total Amount</span><span>₹${total}</span></div>
-        </div>`;
+            <div class="bill-box">
+              <div class="bill-row"><span>${qty} item${qty !== 1 ? "s" : ""}</span><span>₹${total}</span></div>
+              <div class="bill-row total"><span>Total Amount</span><span>₹${total}</span></div>
+            </div>`;
         }
 
         function placeOrder() {
