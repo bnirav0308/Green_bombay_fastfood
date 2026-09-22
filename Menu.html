@@ -656,6 +656,25 @@
         .section {
             animation: fadeUp 0.3s ease both;
         }
+		
+		.order-type-option {
+			border: 2px solid #eee;
+			border-radius: 10px;
+			padding: 12px;
+			text-align: center;
+			font-size: 14px;
+			font-weight: 600;
+			color: #555;
+			background: white;
+			transition: all 0.2s;
+		}
+
+		.order-type-option.active {
+			border-color: #c0392b;
+			background: #fff5f3;
+			color: #c0392b;
+		}
+
 
         @keyframes fadeUp {
             from {
@@ -715,6 +734,28 @@
             <label>👤 Your Name <span style="color:#c0392b">*</span></label>
             <input type="text" id="customerName" placeholder="Enter your name..." style="width:100%;border:2px solid #eee;border-radius:10px;padding:11px 14px;font-family:'Poppins',sans-serif;font-size:14px;outline:none;color:#1a1a1a;transition:border 0.2s;" onfocus="this.style.borderColor='#c0392b'" onblur="this.style.borderColor='#eee'">
         </div>
+		<div class="note-box">
+			<label>🍽️ Order Type <span style="color:#c0392b">*</span></label>
+		
+			<div style="display:flex;gap:10px;margin-top:6px;">
+				<label style="flex:1;cursor:pointer;">
+					<input type="radio" name="orderType" value="Dining" checked
+						style="display:none;">
+					<div class="order-type-option active" onclick="selectOrderType('Dining')">
+						🍽️ Dining
+					</div>
+				</label>
+			
+				<label style="flex:1;cursor:pointer;">
+					<input type="radio" name="orderType" value="Parcel"
+						style="display:none;">
+					<div class="order-type-option" onclick="selectOrderType('Parcel')">
+						📦 Parcel
+					</div>
+				</label>
+			</div>
+		</div>
+
         <div class="note-box">
             <label>📝 Special Instructions (optional)</label>
             <textarea id="noteInput" placeholder="e.g. Less spicy, no onion..."></textarea>
@@ -1004,7 +1045,22 @@
                       <div class="bill-row total"><span>Total Amount</span><span>₹${total}</span></div>
                     </div>`;
         }
+		
+		function selectOrderType(type) {
+			document.querySelectorAll(".order-type-option").forEach(option => {
+				option.classList.remove("active");
+			});
+		
+			const selectedOption = type === "Dining"
+				? document.querySelectorAll(".order-type-option")[0]
+				: document.querySelectorAll(".order-type-option")[1];
+		
+			selectedOption.classList.add("active");
+		
+			document.querySelector(`input[name="orderType"][value="${type}"]`).checked = true;
+		}
 
+		
         function placeOrder() {
             const entries = Object.entries(cart);
             if (!entries.length) { alert("Please add items first!"); return; }
@@ -1012,6 +1068,7 @@
             // Validate customer name
             const nameInput = document.getElementById("customerName");
             const customerName = nameInput.value.trim();
+			const orderType = document.querySelector('input[name="orderType"]:checked').value;
             if (!customerName) {
                 nameInput.style.borderColor = "#c0392b";
                 nameInput.style.boxShadow = "0 0 0 3px rgba(192,57,43,0.15)";
@@ -1025,8 +1082,9 @@
 
             // ── Build WhatsApp message ──
             let msg = `*==== NEW ORDER - PFZ ====*\n`;
-            msg += `*Customer:* ${customerName}\n`;
-            msg += `*Time:* ${new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}\n`;
+			msg += `*Customer:* ${customerName}\n`;
+			msg += `*Order Type:* ${orderType === "Dining" ? "🍽️ Dining" : "📦 Parcel"}\n`;
+			msg += `*Time:* ${new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}\n`;
             msg += `*-------------------------*\n`;
             entries.forEach(([id, qty]) => {
                 const item = MENU.find(i => i.id == id);
